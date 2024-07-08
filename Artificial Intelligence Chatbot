@@ -1,0 +1,48 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class Chatbot {
+
+    private static Map<String, String> knowledgeBase = new HashMap<>();
+
+    static {
+        knowledgeBase.put("hi", "Hello! How can I help you today?");
+        knowledgeBase.put("how are you", " I'm doing great! How about you?");
+        knowledgeBase.put("bye", "Goodbye! Have a nice day!");
+        knowledgeBase.put("what is your name", "I am a Chatbot created to assist you.");
+        // Add more predefined responses as needed
+    }
+
+    public static String getResponse(String input) {
+        input = input.toLowerCase().trim();
+        
+        for (Map.Entry<String, String> entry : knowledgeBase.entrySet()) {
+            if (input.contains(entry.getKey())) {
+                return entry.getValue();
+            }
+        }
+        
+        return "I'm sorry, I don't understand that";
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Hello! I am your chatbot. Type 'bye' to exit.");
+
+        while (true) {
+            System.out.print("You: ");
+            String userInput = scanner.nextLine();
+
+            if (userInput.equalsIgnoreCase("bye")) {
+                System.out.println("Chatbot: " + knowledgeBase.get("bye"));
+                break;
+            }
+
+            String response = getResponse(userInput);
+            System.out.println("Chatbot: " + response);
+        }
+
+        scanner.close();
+    }
+}
